@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+<!--    TODO: CHANGESETS EXAMPLE -->
+
+<!--    <changeSet id="20201204-02" author="kvashnin" logicalFilePath="set1.xml">-->
+<!--        <preConditions onFail="MARK_RAN">-->
+<!--            <sqlCheck expectedResult="0">-->
+<!--                select count(*) from information_schema.tables t where t.table_name = 't_rule_document'-->
+<!--            </sqlCheck>-->
+<!--        </preConditions>-->
+<!--        <sqlFile path="/create_object/t_rule_document.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="20201209-01" author="vdovin" logicalFilePath="set1.xml">-->
+<!--        <preConditions onFail="MARK_RAN">-->
+<!--            <sqlCheck expectedResult="0">-->
+<!--                select count(*) from t_rule_attribute_type t where t.id = 29-->
+<!--            </sqlCheck>-->
+<!--        </preConditions>-->
+<!--        <comment>Добавление возможности настройки условия "Востребованная продукция"</comment>-->
+<!--        <sql><![CDATA[-->
+<!--            INSERT INTO t_rule_attribute_type (name, id, widget_id, comment, ord, code) VALUES ('Востребованная продукция', 29, 6, null, 290, null);-->
+<!--            INSERT INTO t_rule_attr_input_param (id, name, way_value, rule_input_param_type_id, rule_attr_type_id) VALUES (37, 'Востребованная продукция', 'specs.demandedProduct', 2, 29);-->
+<!--        ]]></sql>-->
+<!--    </changeSet>-->
+
+</databaseChangeLog>

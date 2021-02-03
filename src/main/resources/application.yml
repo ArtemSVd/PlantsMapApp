@@ -2,3 +2,20 @@ spring:
   mvc:
     servlet:
       path: /api
+  servlet:
+    multipart:
+      max-request-size: 25MB
+      max-file-size: 25MB
+  datasource:
+    url: ${db.url:jdbc:postgresql://localhost:5432/postgres}
+    username: ${db.username:postgres}
+    password: ${db.password:1}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
+      connection-timeout: 60000
+      maximum-pool-size: 100
+      minimum-idle: 10
+
+storage:
+  location: files/
