@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/.idea
+/target
+PlantsMapApp.iml
+# Datasource local storage ignored files
+/../../../../../../:\Users\Артем\IdeaProjects\PlantsMapApp\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
