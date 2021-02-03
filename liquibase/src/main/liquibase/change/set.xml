@@ -5,14 +5,14 @@
 
 <!--    TODO: CHANGESETS EXAMPLE -->
 
-<!--    <changeSet id="20201204-02" author="kvashnin" logicalFilePath="set1.xml">-->
-<!--        <preConditions onFail="MARK_RAN">-->
-<!--            <sqlCheck expectedResult="0">-->
-<!--                select count(*) from information_schema.tables t where t.table_name = 't_rule_document'-->
-<!--            </sqlCheck>-->
-<!--        </preConditions>-->
-<!--        <sqlFile path="/create_object/t_rule_document.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>-->
-<!--    </changeSet>-->
+    <changeSet id="20210203-01" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.tables t where t.table_name = 'm_plant'
+            </sqlCheck>
+        </preConditions>
+        <sqlFile path="/create_tables/m_plant.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>
+    </changeSet>
 
 <!--    <changeSet id="20201209-01" author="vdovin" logicalFilePath="set1.xml">-->
 <!--        <preConditions onFail="MARK_RAN">-->

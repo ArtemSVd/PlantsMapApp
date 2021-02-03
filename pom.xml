@@ -151,10 +151,9 @@
                                     <includePackages>false</includePackages>
 
                                     <includes>
-                                        seq_rule_history  |
+                                        SEQ_PLANT  |
 
-<!--                                        T_COMPARISON_OPERATION_TYPE |-->
-
+                                        M_PLANT
                                     </includes>
                                     <schemata>
                                         <schema>
