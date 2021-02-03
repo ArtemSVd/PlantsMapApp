@@ -3,13 +3,17 @@ create table if not exists m_plant
     id integer not null
         constraint pk_plant
             primary key,
+    id_from_device integer not null,
     name varchar(1000) not null,
     description varchar(3000),
     kingdom_type varchar(50) not null,
     file_path varchar(500),
     created_date timestamp,
     user_id integer not null,
-    coordinate varchar(100)
+    coordinate varchar(100),
+
+    CONSTRAINT pk_plant_user_id UNIQUE (id_from_device, user_id),
+    CONSTRAINT pk_plant_file_path UNIQUE (file_path)
 );
 
 create sequence seq_plant;
@@ -17,6 +21,8 @@ create sequence seq_plant;
 comment on table m_plant is 'Растения/Грибы';
 
 comment on column m_plant.id is 'Идентификатор';
+
+comment on column m_plant.id_from_device is 'Идентификатор записи с устройства пользователя';
 
 comment on column m_plant.name is 'Название';
 
