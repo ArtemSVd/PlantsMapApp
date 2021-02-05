@@ -2,8 +2,9 @@ package org.example.plantsmap.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.example.plantsmap.PlantRepository;
+import org.example.plantsmap.repository.PlantRepository;
 import org.example.plantsmap.dto.Plant;
+import org.example.plantsmap.security.UserContext;
 import org.jooq.exception.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +22,9 @@ public class PlantsService {
 
     private final PlantRepository plantRepository;
 
+    private final UserContext userContext;
+
     public List<Integer> upload(List<Plant> plants, MultipartFile[] files) {
-        // todo: сделать проверку юзера
         List<Integer> savedPlants = new ArrayList<>();
 
         for (MultipartFile file : files) {
@@ -37,6 +39,7 @@ public class PlantsService {
 
                     Plant plant = filteredPlants.get(0);
                     plant.setFilePath(filePath);
+                    plant.setUser(userContext.getUser());
                     plantRepository.create(plant);
 
                     savedPlants.add(plant.getId());

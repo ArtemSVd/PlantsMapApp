@@ -9,7 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,11 +30,9 @@ public class PlantsMapController {
     private final PlantsService service;
     private final FileService fileService;
 
-    // todo: подумать над ответом
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     @ResponseBody
-    public ResponseEntity<List<Integer>> upload(@CookieValue("user") String cookie, @RequestPart("json") List<Plant> plants, @RequestPart("image") MultipartFile[] image) {
-        //Пока возвращаем список сохраненных
+    public ResponseEntity<List<Integer>> upload(@RequestPart("json") List<Plant> plants, @RequestPart("image") MultipartFile[] image) {
         List<Integer> savedEntityIds = service.upload(plants, image);
         return ResponseEntity.ok(savedEntityIds);
     }
@@ -48,7 +52,7 @@ public class PlantsMapController {
 
     //todo: Сделать апи для получения элементов с учетом фильтров
     @PostMapping("/list")
-    public List<Plant> getList(@CookieValue("user") String cookie) {
+    public List<Plant> getList() {
         List<Plant> list = new ArrayList<>();
         return list;
     }

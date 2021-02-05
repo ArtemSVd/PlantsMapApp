@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.plantsmap.enums.KingdomType;
 
+import java.util.List;
+
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,7 +25,9 @@ public class Plant {
 
     private KingdomType type;
 
-    private Integer userId;
+    private User user;
 
     private String coordinate;
+
+    private List<Comment> comments;
 }

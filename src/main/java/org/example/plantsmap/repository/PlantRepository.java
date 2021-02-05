@@ -1,4 +1,4 @@
-package org.example.plantsmap;
+package org.example.plantsmap.repository;
 
 
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class PlantRepository {
         mPlant.setDescription(plant.getDescription());
         mPlant.setKingdomType(plant.getType().name());
         mPlant.setCreatedDate(LocalDateTime.now());
-        mPlant.setUserId(plant.getUserId());
+        mPlant.setUserId(plant.getUser().getId());
         mPlant.setCoordinate(plant.getCoordinate());
         mPlant.setFilePath(plant.getFilePath());
 
