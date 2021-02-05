@@ -3,8 +3,6 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-<!--    TODO: CHANGESETS EXAMPLE -->
-
     <changeSet id="20210203-01" author="vdovin" logicalFilePath="set.xml">
         <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0">
@@ -12,6 +10,35 @@
             </sqlCheck>
         </preConditions>
         <sqlFile path="/create_tables/m_plant.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="20210204-01" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.tables t where t.table_name = 'm_comment'
+            </sqlCheck>
+        </preConditions>
+        <sqlFile path="/create_tables/m_comment.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="20210204-02" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.tables t where t.table_name = 'm_user'
+            </sqlCheck>
+        </preConditions>
+        <sqlFile path="/create_tables/m_user.sql"  relativeToChangelogFile="true"  encoding="UTF-8"/>
+    </changeSet>
+
+    <changeSet id="20210204-03" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="2">
+                select count(*) from information_schema.tables t where t.table_name = 'm_user' or t.table_name = 'm_plant';
+            </sqlCheck>
+        </preConditions>
+        <sql><![CDATA[
+                ALTER TABLE m_plant ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES m_user(id);
+        ]]></sql>
     </changeSet>
 
 <!--    <changeSet id="20201209-01" author="vdovin" logicalFilePath="set1.xml">-->

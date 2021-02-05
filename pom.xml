@@ -152,8 +152,10 @@
 
                                     <includes>
                                         SEQ_PLANT  |
+                                        SEQ_COMMENT |
 
-                                        M_PLANT
+                                        M_PLANT |
+                                        M_COMMENT
                                     </includes>
                                     <schemata>
                                         <schema>
