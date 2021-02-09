@@ -37,7 +37,7 @@ public class SecurityFilter implements Filter {
         }
 
         try {
-            User user = userService.getOrCreateUser(deviceCookie.getValue(), userNameCookie.getValue());
+            User user = userService.getOrCreateUser(deviceCookie.getValue(), userNameCookie != null ? userNameCookie.getValue() : null);
             userContext.setUser(user);
         } catch (InvalidDataException e) {
             ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_BAD_REQUEST);

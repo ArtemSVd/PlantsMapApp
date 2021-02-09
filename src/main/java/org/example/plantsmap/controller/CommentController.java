@@ -35,10 +35,6 @@ public class CommentController {
 
     @GetMapping(value = "/{plantId}")
     public ResponseEntity<List<Comment>> getComments(@PathVariable("plantId") Integer plantId) {
-        try {
-            return ResponseEntity.ok(service.getByPlantId(plantId));
-        } catch (InvalidDataException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        return ResponseEntity.ok(service.getByPlantId(plantId));
     }
 }

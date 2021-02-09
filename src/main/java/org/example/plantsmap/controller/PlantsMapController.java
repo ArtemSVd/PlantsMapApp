@@ -1,8 +1,11 @@
 package org.example.plantsmap.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.plantsmap.dto.ListResult;
 import org.example.plantsmap.dto.Plant;
+import org.example.plantsmap.dto.PlantsRequestParams;
 import org.example.plantsmap.service.FileService;
+import org.example.plantsmap.service.PlantsListService;
 import org.example.plantsmap.service.PlantsService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +32,7 @@ public class PlantsMapController {
 
     private final PlantsService service;
     private final FileService fileService;
+    private final PlantsListService listService;
 
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     @ResponseBody
@@ -50,11 +54,9 @@ public class PlantsMapController {
         }
     }
 
-    //todo: Сделать апи для получения элементов с учетом фильтров
     @PostMapping("/list")
-    public List<Plant> getList() {
-        List<Plant> list = new ArrayList<>();
-        return list;
+    public ListResult<Plant> getList(@RequestBody PlantsRequestParams params) {
+        return listService.list(params);
     }
 
 }

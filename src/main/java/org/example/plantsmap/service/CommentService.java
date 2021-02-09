@@ -15,10 +15,7 @@ import java.util.Map;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public List<Comment> getByPlantId(Integer plantId) throws InvalidDataException {
-        if (plantId == null) {
-            throw new InvalidDataException("emptyPlantId");
-        }
+    public List<Comment> getByPlantId(Integer plantId) {
         return commentRepository.getByPlantId(plantId);
     }
 
