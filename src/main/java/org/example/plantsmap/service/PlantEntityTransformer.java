@@ -17,7 +17,7 @@ public class PlantEntityTransformer {
                 .id(mPlant.getId())
                 .name(mPlant.getName())
                 .coordinate(mPlant.getCoordinate())
-                .comments(commentService.getByPlantId(mPlant.getId()))
+//                .comments(commentService.getByPlantId(mPlant.getId()))
                 .description(mPlant.getDescription())
                 .filePath(mPlant.getFilePath())
                 .type(KingdomType.valueOf(mPlant.getKingdomType()))

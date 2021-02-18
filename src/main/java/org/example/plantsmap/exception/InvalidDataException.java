@@ -3,7 +3,7 @@ package org.example.plantsmap.exception;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InvalidDataException extends Exception{
+public class InvalidDataException extends Exception {
     private Map<String, String> errorsMap;
 
 

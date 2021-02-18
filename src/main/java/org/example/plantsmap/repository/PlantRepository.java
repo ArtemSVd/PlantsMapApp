@@ -1,12 +1,13 @@
 package org.example.plantsmap.repository;
 
-
 import lombok.AllArgsConstructor;
 import org.example.plantsmap.dto.Plant;
 import org.example.plantsmap.generated.tables.daos.MPlantDao;
 import org.example.plantsmap.generated.tables.pojos.MPlant;
 import org.jooq.DSLContext;
+
 import static org.example.plantsmap.generated.Sequences.SEQ_PLANT;
+
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -33,7 +34,5 @@ public class PlantRepository {
 
         dao.insert(mPlant);
     }
-
-
 
 }

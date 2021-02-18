@@ -6,7 +6,6 @@ import org.example.plantsmap.dto.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-
 @Component
 @RequestScope
 @Getter

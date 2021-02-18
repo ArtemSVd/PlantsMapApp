@@ -1,7 +1,6 @@
 package org.example.plantsmap.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.plantsmap.dto.ListResult;
 import org.example.plantsmap.dto.Plant;
 import org.example.plantsmap.dto.PlantsRequestParams;
 import org.example.plantsmap.service.FileService;
@@ -41,8 +40,8 @@ public class PlantsMapController {
         return ResponseEntity.ok(savedEntityIds);
     }
 
-    @GetMapping(value = "/file/{fileName}")
-    public ResponseEntity<Object> downloadFile( @PathVariable("fileName") String fileName) {
+    @GetMapping(value = "/files/{fileName}")
+    public ResponseEntity<Object> downloadFile(@PathVariable("fileName") String fileName) {
         try {
             Resource resource = fileService.getFileByName(fileName);
             return ResponseEntity.ok()
@@ -55,8 +54,12 @@ public class PlantsMapController {
     }
 
     @PostMapping("/list")
-    public ListResult<Plant> getList(@RequestBody PlantsRequestParams params) {
+    public List<Plant> getList(@RequestBody PlantsRequestParams params) {
         return listService.list(params);
     }
 
+    @GetMapping("/all")
+    public List<Plant> listAll() {
+        return listService.list(new PlantsRequestParams());
+    }
 }

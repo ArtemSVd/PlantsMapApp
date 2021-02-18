@@ -1,5 +1,7 @@
 package org.example.plantsmap.security;
+
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.example.plantsmap.dto.User;
 import org.example.plantsmap.exception.InvalidDataException;
 import org.example.plantsmap.service.UserService;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Log4j2
 @Component
 @RequiredArgsConstructor
 public class SecurityFilter implements Filter {
@@ -32,6 +35,7 @@ public class SecurityFilter implements Filter {
         Cookie deviceCookie = extractCookie((HttpServletRequest) req, "device");
         Cookie userNameCookie = extractCookie((HttpServletRequest) req, "user");
         if (deviceCookie == null) {
+            log.error("unauthorized request");
             ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }

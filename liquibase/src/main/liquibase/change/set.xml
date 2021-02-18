@@ -41,6 +41,17 @@
         ]]></sql>
     </changeSet>
 
+    <changeSet id="20210209-01" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="2">
+                select count(*) from information_schema.tables t where t.table_name = 'm_comment' or t.table_name = 'm_plant';
+            </sqlCheck>
+        </preConditions>
+        <sql><![CDATA[
+                ALTER TABLE m_comment ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES m_user(id);
+        ]]></sql>
+    </changeSet>
+
 <!--    <changeSet id="20201209-01" author="vdovin" logicalFilePath="set1.xml">-->
 <!--        <preConditions onFail="MARK_RAN">-->
 <!--            <sqlCheck expectedResult="0">-->

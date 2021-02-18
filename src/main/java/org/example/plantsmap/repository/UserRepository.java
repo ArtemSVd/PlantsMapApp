@@ -31,10 +31,9 @@ public class UserRepository {
         return mUserToUser(dao.fetchOneById(id));
     }
 
-    public User update(User user) {
+    public void update(User user) {
         MUser mUser = userToMUser(user, false);
         dao.update(mUser);
-        return getById(mUser.getId());
     }
 
     private User getById(Integer id) {

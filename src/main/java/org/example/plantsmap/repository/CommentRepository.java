@@ -43,12 +43,12 @@ public class CommentRepository {
     }
 
     private Comment mapMCommentToComment(MComment mComment) {
-            return Comment
-                    .builder()
-                    .user(userService.getById(mComment.getId()))
-                    .createdDate(mComment.getCreatedDate())
-                    .plantId(mComment.getPlantId())
-                    .text(mComment.getComment())
-                    .build();
+        return Comment
+                .builder()
+                .user(userService.getById(mComment.getId()))
+                .createdDate(mComment.getCreatedDate())
+                .plantId(mComment.getPlantId())
+                .text(mComment.getComment())
+                .build();
     }
 }

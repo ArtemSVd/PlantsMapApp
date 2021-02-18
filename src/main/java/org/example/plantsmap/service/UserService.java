@@ -1,51 +1,59 @@
 package org.example.plantsmap.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.example.plantsmap.dto.User;
 import org.example.plantsmap.exception.InvalidDataException;
 import org.example.plantsmap.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 @AllArgsConstructor
 public class UserService {
-   private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-   public User create(User user) throws InvalidDataException {
-       if (user.getDeviceName() == null) {
-           throw new InvalidDataException("emptyDeviceName");
-       }
-       return userRepository.create(user);
-   }
+    public User create(User user) throws InvalidDataException {
+        log.info("create user: " + user);
+        if (user.getDeviceName() == null) {
+            log.error("empty device number");
+            throw new InvalidDataException("emptyDeviceName");
+        }
+        return userRepository.create(user);
+    }
 
-   public User getByDeviceName(String deviceName) throws InvalidDataException {
-       if (deviceName == null) {
-           throw new InvalidDataException("emptyDeviceName");
-       }
-       return userRepository.getByDeviceNumber(deviceName);
-   }
+    public User getByDeviceName(String deviceName) throws InvalidDataException {
+        log.info("get user by device number: " + deviceName);
+        if (deviceName == null) {
+            log.error("empty device number");
+            throw new InvalidDataException("emptyDeviceName");
+        }
+        return userRepository.getByDeviceNumber(deviceName);
+    }
 
-    public User getById(Integer id){
+    public User getById(Integer id) {
+        log.info("get user by id: " + id);
         return userRepository.getByDeviceNumber(id);
     }
 
-   public User getOrCreateUser(String deviceName, String name) throws InvalidDataException {
-       User user = getByDeviceName(deviceName);
+    public User getOrCreateUser(String deviceName, String name) throws InvalidDataException {
+        User user = getByDeviceName(deviceName);
 
-       if (user != null && user.getName() == null && name != null) {
-           user.setName(name);
-           userRepository.update(user);
-       }
+        if (user != null && user.getName() == null && name != null) {
+            user.setName(name);
+            log.info("update user : " + user);
+            userRepository.update(user);
+        }
 
-       if (user == null) {
-           User newUser = User
-                   .builder()
-                   .deviceName(deviceName)
-                   .name(name)
-                   .build();
-           user = create(newUser);
-       }
+        if (user == null) {
+            User newUser = User
+                    .builder()
+                    .deviceName(deviceName)
+                    .name(name)
+                    .build();
+            user = create(newUser);
+        }
 
-       return user;
-   }
+        return user;
+    }
 }

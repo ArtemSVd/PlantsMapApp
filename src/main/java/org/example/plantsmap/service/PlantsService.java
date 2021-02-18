@@ -40,6 +40,9 @@ public class PlantsService {
                     Plant plant = filteredPlants.get(0);
                     plant.setFilePath(filePath);
                     plant.setUser(userContext.getUser());
+
+                    log.info("save plant: " + plant);
+
                     plantRepository.create(plant);
 
                     savedPlants.add(plant.getId());
