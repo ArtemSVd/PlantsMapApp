@@ -31,7 +31,7 @@ public class Plant {
 
     private User user;
 
-    private String coordinate;
+    private Coordinate coordinate;
 
     private List<Comment> comments;
 }

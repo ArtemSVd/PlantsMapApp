@@ -39,7 +39,8 @@ public class UserService {
     public User getOrCreateUser(String deviceName, String name) throws InvalidDataException {
         User user = getByDeviceName(deviceName);
 
-        if (user != null && user.getName() == null && name != null) {
+        if (user != null
+                && (user.getName() == null && name != null || name != null && !name.equals(user.getName()))) {
             user.setName(name);
             log.info("update user : " + user);
             userRepository.update(user);

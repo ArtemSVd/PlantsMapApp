@@ -1,5 +1,6 @@
 package org.example.plantsmap.security;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.example.plantsmap.dto.User;
@@ -41,7 +42,7 @@ public class SecurityFilter implements Filter {
         }
 
         try {
-            User user = userService.getOrCreateUser(deviceCookie.getValue(), userNameCookie != null ? userNameCookie.getValue() : null);
+            User user = userService.getOrCreateUser(deviceCookie.getValue(), userNameCookie != null ? new String(Base64.decode(userNameCookie.getValue())) : null);
             userContext.setUser(user);
         } catch (InvalidDataException e) {
             ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_BAD_REQUEST);

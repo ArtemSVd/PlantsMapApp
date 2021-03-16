@@ -29,7 +29,10 @@ public class PlantRepository {
         mPlant.setKingdomType(plant.getType().name());
         mPlant.setCreatedDate(LocalDateTime.now());
         mPlant.setUserId(plant.getUser().getId());
-        mPlant.setCoordinate(plant.getCoordinate());
+        if (plant.getCoordinate() != null) {
+            mPlant.setLatitude(plant.getCoordinate().getLatitude());
+            mPlant.setLongitude(plant.getCoordinate().getLongitude());
+        }
         mPlant.setFilePath(plant.getFilePath());
 
         dao.insert(mPlant);

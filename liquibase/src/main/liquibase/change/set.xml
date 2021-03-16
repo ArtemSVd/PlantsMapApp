@@ -46,23 +46,34 @@
             <sqlCheck expectedResult="2">
                 select count(*) from information_schema.tables t where t.table_name = 'm_comment' or t.table_name = 'm_plant';
             </sqlCheck>
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.table_constraints tc  where tc.table_name = 'm_comment' and constraint_name = 'fk_user';
+            </sqlCheck>
         </preConditions>
         <sql><![CDATA[
                 ALTER TABLE m_comment ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES m_user(id);
         ]]></sql>
     </changeSet>
 
-<!--    <changeSet id="20201209-01" author="vdovin" logicalFilePath="set1.xml">-->
-<!--        <preConditions onFail="MARK_RAN">-->
-<!--            <sqlCheck expectedResult="0">-->
-<!--                select count(*) from t_rule_attribute_type t where t.id = 29-->
-<!--            </sqlCheck>-->
-<!--        </preConditions>-->
-<!--        <comment>Добавление возможности настройки условия "Востребованная продукция"</comment>-->
-<!--        <sql><![CDATA[-->
-<!--            INSERT INTO t_rule_attribute_type (name, id, widget_id, comment, ord, code) VALUES ('Востребованная продукция', 29, 6, null, 290, null);-->
-<!--            INSERT INTO t_rule_attr_input_param (id, name, way_value, rule_input_param_type_id, rule_attr_type_id) VALUES (37, 'Востребованная продукция', 'specs.demandedProduct', 2, 29);-->
-<!--        ]]></sql>-->
-<!--    </changeSet>-->
+    <changeSet id="20210315-01" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                select count(*) from information_schema.tables t where t.table_name = 'm_plant';
+            </sqlCheck>
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.columns t where t.table_name = 'm_plant' and column_name in ('longitude', 'latitude');
+            </sqlCheck>
+        </preConditions>
+        <comment>Добавление полей для хранения координат</comment>
+        <sql><![CDATA[
+                ALTER TABLE m_plant DROP COLUMN coordinate;
+
+                ALTER TABLE m_plant ADD COLUMN longitude varchar(25);
+                ALTER TABLE m_plant ADD COLUMN latitude varchar(25);
+
+                comment on column m_plant.longitude is 'Долгота';
+                comment on column m_plant.latitude is 'Широта';
+        ]]></sql>
+    </changeSet>
 
 </databaseChangeLog>

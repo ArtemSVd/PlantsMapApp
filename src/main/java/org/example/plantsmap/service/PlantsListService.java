@@ -7,6 +7,7 @@ import org.example.plantsmap.dto.Plant;
 import org.example.plantsmap.dto.PlantsRequestParams;
 import org.example.plantsmap.generated.tables.pojos.MPlant;
 import org.example.plantsmap.generated.tables.records.MPlantRecord;
+import org.example.plantsmap.security.UserContext;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.SelectConditionStep;
@@ -22,6 +23,8 @@ import static org.example.plantsmap.generated.tables.MPlant.M_PLANT;
 @Service
 @AllArgsConstructor
 public class PlantsListService {
+
+    UserContext userContext;
 
     private final DSLContext jooq;
     private final PlantEntityTransformer transformer;
@@ -41,11 +44,11 @@ public class PlantsListService {
     private SelectConditionStep<MPlantRecord> getSelect(PlantsRequestParams listParams) {
         Condition condition = noCondition();
 
-        val kingdomTypeFilter = listParams.getKingdomType();
-        condition = kingdomTypeFilter != null ? condition.and(M_PLANT.KINGDOM_TYPE.eq(kingdomTypeFilter)) : condition;
+        val kingdomTypeFilter = listParams.getKingdomTypes();
+        condition = kingdomTypeFilter != null ? condition.and(M_PLANT.KINGDOM_TYPE.in(kingdomTypeFilter)) : condition;
 
         val nameFilter = listParams.getName();
-        condition = nameFilter != null ? condition.and(M_PLANT.NAME.likeIgnoreCase(nameFilter)) : condition;
+        condition = nameFilter != null ? condition.and(M_PLANT.NAME.likeIgnoreCase("%" + nameFilter + "%")) : condition;
 
         return jooq
                 .selectFrom(M_PLANT)

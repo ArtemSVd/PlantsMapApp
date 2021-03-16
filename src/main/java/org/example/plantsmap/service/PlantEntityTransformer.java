@@ -1,6 +1,7 @@
 package org.example.plantsmap.service;
 
 import lombok.AllArgsConstructor;
+import org.example.plantsmap.dto.Coordinate;
 import org.example.plantsmap.dto.Plant;
 import org.example.plantsmap.enums.KingdomType;
 import org.example.plantsmap.generated.tables.pojos.MPlant;
@@ -16,7 +17,10 @@ public class PlantEntityTransformer {
         return Plant.builder()
                 .id(mPlant.getId())
                 .name(mPlant.getName())
-                .coordinate(mPlant.getCoordinate())
+                .coordinate(Coordinate.builder()
+                        .latitude(mPlant.getLatitude())
+                        .longitude(mPlant.getLongitude())
+                        .build())
 //                .comments(commentService.getByPlantId(mPlant.getId()))
                 .description(mPlant.getDescription())
                 .filePath(mPlant.getFilePath())
