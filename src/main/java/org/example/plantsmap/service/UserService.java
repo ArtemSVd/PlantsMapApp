@@ -32,7 +32,6 @@ public class UserService {
     }
 
     public User getById(Integer id) {
-        log.info("get user by id: " + id);
         return userRepository.getByDeviceNumber(id);
     }
 

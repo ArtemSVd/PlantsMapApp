@@ -76,4 +76,21 @@
         ]]></sql>
     </changeSet>
 
+    <changeSet id="20210320-01" author="vdovin" logicalFilePath="set.xml">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                select count(*) from information_schema.tables t where t.table_name = 'm_plant';
+            </sqlCheck>
+            <sqlCheck expectedResult="0">
+                select count(*) from information_schema.columns t where t.table_name = 'm_plant' and column_name in ('updated_date');
+            </sqlCheck>
+        </preConditions>
+        <comment>Добавление даты обновления</comment>
+        <sql><![CDATA[
+                ALTER TABLE m_plant ADD COLUMN updated_date timestamp;
+
+                comment on column m_plant.updated_date is 'Дата последнего обновления';
+        ]]></sql>
+    </changeSet>
+
 </databaseChangeLog>

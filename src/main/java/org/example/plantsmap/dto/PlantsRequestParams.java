@@ -15,6 +15,8 @@ import java.util.List;
 public class PlantsRequestParams {
     private List<KingdomType> kingdomTypes;
 
+    private List<Integer> excludedPlantIds;
+
     private String name;
 
 }

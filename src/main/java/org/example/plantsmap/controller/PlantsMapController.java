@@ -1,6 +1,7 @@
 package org.example.plantsmap.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.example.plantsmap.dto.Plant;
 import org.example.plantsmap.dto.PlantsRequestParams;
 import org.example.plantsmap.service.FileService;
@@ -27,6 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/plants", produces = "application/json; charset=UTF-8")
 @AllArgsConstructor
+@Log4j2
 public class PlantsMapController {
 
     private final PlantsService service;
@@ -61,5 +63,11 @@ public class PlantsMapController {
     @GetMapping("/all")
     public List<Plant> listAll() {
         return listService.list(new PlantsRequestParams());
+    }
+
+    @GetMapping("/available")
+    public boolean checkAvailable() {
+        log.info("Чекают доступность");
+        return true;
     }
 }

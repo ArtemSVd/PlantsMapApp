@@ -7,6 +7,7 @@ import org.example.plantsmap.generated.tables.pojos.MPlant;
 import org.jooq.DSLContext;
 
 import static org.example.plantsmap.generated.Sequences.SEQ_PLANT;
+import static org.example.plantsmap.generated.Tables.M_PLANT;
 
 import org.springframework.stereotype.Repository;
 
@@ -36,6 +37,24 @@ public class PlantRepository {
         mPlant.setFilePath(plant.getFilePath());
 
         dao.insert(mPlant);
+    }
+
+    public void update(Plant plant, MPlant mPlant) {
+        mPlant.setName(plant.getName());
+        mPlant.setKingdomType(plant.getType().name());
+        mPlant.setDescription(plant.getDescription());
+        mPlant.setUpdatedDate(LocalDateTime.now());
+
+        dao.update(mPlant);
+    }
+
+    public MPlant getByIdFromDeviceAndUserId(Integer idFromDevice, Integer userId) {
+        return context.select(M_PLANT.fields())
+                .from(M_PLANT)
+                .where(M_PLANT.ID_FROM_DEVICE.eq(idFromDevice)
+                        .and(M_PLANT.USER_ID.eq(userId)))
+                .fetchOneInto(MPlant.class);
+
     }
 
 }
