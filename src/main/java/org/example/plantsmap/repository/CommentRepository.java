@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.example.plantsmap.generated.Sequences.SEQ_COMMENT;
+import static org.example.plantsmap.generated.Tables.M_COMMENT;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,7 +36,10 @@ public class CommentRepository {
     }
 
     public List<Comment> getByPlantId(Integer plantId) {
-        List<MComment> comments = dao.fetchByPlantId(plantId);
+        List<MComment> comments = jooq.selectFrom(M_COMMENT)
+                .where(M_COMMENT.PLANT_ID.eq(plantId))
+                .orderBy(M_COMMENT.CREATED_DATE.asc())
+                .fetchInto(MComment.class);
 
         return comments.stream()
                 .map(this::mapMCommentToComment)
@@ -45,7 +49,7 @@ public class CommentRepository {
     private Comment mapMCommentToComment(MComment mComment) {
         return Comment
                 .builder()
-                .user(userService.getById(mComment.getId()))
+                .user(userService.getById(mComment.getUserId()))
                 .createdDate(mComment.getCreatedDate())
                 .plantId(mComment.getPlantId())
                 .text(mComment.getComment())

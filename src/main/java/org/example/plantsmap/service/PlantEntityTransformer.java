@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PlantEntityTransformer {
     private final UserService userService;
-    private final CommentService commentService;
 
     public Plant mapEntityToDto(MPlant mPlant) {
         return Plant.builder()
@@ -21,7 +20,6 @@ public class PlantEntityTransformer {
                         .latitude(mPlant.getLatitude())
                         .longitude(mPlant.getLongitude())
                         .build())
-//                .comments(commentService.getByPlantId(mPlant.getId()))
                 .description(mPlant.getDescription())
                 .filePath(mPlant.getFilePath())
                 .type(KingdomType.valueOf(mPlant.getKingdomType()))

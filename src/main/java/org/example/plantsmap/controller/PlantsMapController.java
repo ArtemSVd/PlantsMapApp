@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/plants", produces = "application/json; charset=UTF-8")
@@ -37,9 +38,14 @@ public class PlantsMapController {
 
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     @ResponseBody
-    public ResponseEntity<List<Integer>> upload(@RequestPart("json") List<Plant> plants, @RequestPart("image") MultipartFile[] image) {
-        List<Integer> savedEntityIds = service.upload(plants, image);
+    public ResponseEntity<Map<Integer, Integer>> upload(@RequestPart("json") List<Plant> plants, @RequestPart("image") MultipartFile[] image) {
+        Map<Integer, Integer> savedEntityIds = service.upload(plants, image);
         return ResponseEntity.ok(savedEntityIds);
+    }
+
+    @GetMapping(value = "/item/{id}")
+    public ResponseEntity<Plant> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping(value = "/files/{fileName}")

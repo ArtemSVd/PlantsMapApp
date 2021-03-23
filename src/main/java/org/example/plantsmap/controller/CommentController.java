@@ -33,7 +33,7 @@ public class CommentController {
         }
     }
 
-    @GetMapping(value = "/{plantId}")
+    @GetMapping(value = "/plant/{plantId}")
     public ResponseEntity<List<Comment>> getComments(@PathVariable("plantId") Integer plantId) {
         return ResponseEntity.ok(service.getByPlantId(plantId));
     }

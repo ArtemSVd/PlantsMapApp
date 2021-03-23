@@ -3,6 +3,7 @@ package org.example.plantsmap.security;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.connector.RequestFacade;
 import org.example.plantsmap.dto.User;
 import org.example.plantsmap.exception.InvalidDataException;
 import org.example.plantsmap.service.UserService;
@@ -27,6 +28,8 @@ public class SecurityFilter implements Filter {
     private final UserContext userContext;
     private final UserService userService;
 
+    private final String ALLOW_URI = "/api/plants/files/";
+
     @Override
     public void init(FilterConfig filterConfig) {
     }
@@ -35,6 +38,12 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         Cookie deviceCookie = extractCookie((HttpServletRequest) req, "device");
         Cookie userNameCookie = extractCookie((HttpServletRequest) req, "user");
+
+        if (((RequestFacade) req).getRequestURI().contains(ALLOW_URI)) {
+            chain.doFilter(req, resp);
+            return;
+        }
+
         if (deviceCookie == null) {
             log.error("unauthorized request");
             ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_UNAUTHORIZED);

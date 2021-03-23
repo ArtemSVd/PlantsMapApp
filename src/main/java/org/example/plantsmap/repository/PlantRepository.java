@@ -21,7 +21,7 @@ public class PlantRepository {
 
     private final MPlantDao dao;
 
-    public void create(Plant plant) {
+    public int create(Plant plant) {
         MPlant mPlant = new MPlant();
         mPlant.setId(context.nextval(SEQ_PLANT).intValue());
         mPlant.setIdFromDevice(plant.getId());
@@ -37,15 +37,19 @@ public class PlantRepository {
         mPlant.setFilePath(plant.getFilePath());
 
         dao.insert(mPlant);
+
+        return mPlant.getId();
     }
 
-    public void update(Plant plant, MPlant mPlant) {
+    public int update(Plant plant, MPlant mPlant) {
         mPlant.setName(plant.getName());
         mPlant.setKingdomType(plant.getType().name());
         mPlant.setDescription(plant.getDescription());
         mPlant.setUpdatedDate(LocalDateTime.now());
 
         dao.update(mPlant);
+
+        return mPlant.getId();
     }
 
     public MPlant getByIdFromDeviceAndUserId(Integer idFromDevice, Integer userId) {
@@ -55,6 +59,13 @@ public class PlantRepository {
                         .and(M_PLANT.USER_ID.eq(userId)))
                 .fetchOneInto(MPlant.class);
 
+    }
+
+    public MPlant getById(Integer id) {
+        return context.select(M_PLANT.fields())
+                .from(M_PLANT)
+                .where(M_PLANT.ID.eq(id))
+                .fetchOneInto(MPlant.class);
     }
 
 }
