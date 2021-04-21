@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -26,8 +27,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<Object> addComment(@RequestBody Comment comment) {
         try {
-            service.save(comment);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(service.save(comment));
         } catch (InvalidDataException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -36,5 +36,10 @@ public class CommentController {
     @GetMapping(value = "/plant/{plantId}")
     public ResponseEntity<List<Comment>> getComments(@PathVariable("plantId") Integer plantId) {
         return ResponseEntity.ok(service.getByPlantId(plantId));
+    }
+
+    @GetMapping(value = "/date")
+    public ResponseEntity<LocalDateTime> getComments() {
+        return ResponseEntity.ok(LocalDateTime.now());
     }
 }

@@ -24,15 +24,17 @@ public class CommentRepository {
     private final UserContext userContext;
     private final UserService userService;
 
-    public void save(Comment comment) {
+    public Comment save(Comment comment) {
         MComment mComment = new MComment();
         mComment.setId(jooq.nextval(SEQ_COMMENT).intValue());
         mComment.setComment(comment.getText());
         mComment.setPlantId(comment.getPlantId());
-        mComment.setCreatedDate(comment.getCreatedDate() != null ? comment.getCreatedDate() : LocalDateTime.now());
+        mComment.setCreatedDate(LocalDateTime.now());
         mComment.setUserId(userContext.getUser().getId());
 
         dao.insert(mComment);
+
+        return mapMCommentToComment(dao.fetchOneById(mComment.getId()));
     }
 
     public List<Comment> getByPlantId(Integer plantId) {

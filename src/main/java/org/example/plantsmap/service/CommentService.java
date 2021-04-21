@@ -22,7 +22,7 @@ public class CommentService {
         return commentRepository.getByPlantId(plantId);
     }
 
-    public void save(Comment comment) throws InvalidDataException {
+    public Comment save(Comment comment) throws InvalidDataException {
         log.info("save comment:" + comment.toString());
         Map<String, String> errorsMap = new HashMap<>();
         if (comment.getPlantId() == null) {
@@ -37,7 +37,10 @@ public class CommentService {
             throw new InvalidDataException("", errorsMap);
         }
 
-        commentRepository.save(comment);
         log.info("comment saved successfully");
+        Comment saved = commentRepository.save(comment);
+        log.info("saved:" + saved.toString());
+
+        return saved;
     }
 }
